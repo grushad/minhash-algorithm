@@ -10,14 +10,12 @@ import java.io.*;
 public class Minhash {
 
   public void generateShingles(String content, Set<Integer> shingles){
-    int nGram = 2;
-    //Set<String> shingles = new HashSet<>();   
+    int nGram = 2;  
     String[] arr = content.split(" ");
     for(int i = 0; i < arr.length - nGram; i++){
-      String shingle = arr[i] +  " " + arr[i + 1] + " " + arr[i + 2];//content.substring(i, i + nGram);      
+      String shingle = arr[i] +  " " + arr[i + 1] + " " + arr[i + 2];
       shingles.add(shingle.hashCode());
-    }
-    //return shingles;
+    }    
   }
 
   public int[] generateHashFunc(int numHashFunc){
@@ -36,50 +34,22 @@ public class Minhash {
     return hashFunc;
   }
 
-  public double calcJSim(String content1, String content2, int numHashFunc, int nGram, int numFiles){
+  public double calcJSim(String content1, String content2, int numHashFunc, int numFiles){
     
     Set<Integer> set1 = new HashSet<>();
     generateShingles(content1, set1);
-    System.out.println(set1);
+    // System.out.println(set1);
     
     Set<Integer> set2 = new HashSet<>();
     generateShingles(content2, set2);
-    System.out.println(set2);    
-
-   //Set<String> allShingles = new HashSet<>();
-    // allShingles.addAll(set1);
-    // allShingles.addAll(set2);
-
-    // int sz = shingles.size();
-    // System.out.println(sz);
+    // System.out.println(set2);    
 
     int[] aCoeff = generateHashFunc(numHashFunc);
     int[] bCoeff = generateHashFunc(numHashFunc);
 
     int[][] signatures = new int[numHashFunc][numFiles];
 
-    // for(int[] row: signatures){
-    //   row[0] = Integer.MAX_VALUE;
-    //   row[1] = Integer.MAX_VALUE;
-    // }
-
-    int prime = 42949673;
-
-    // for(String shingle: allShingles){
-    //   int hashCode = shingle.hashCode();
-    //   // System.out.println(hashCode);
-    //   for(int i = 0; i < numHashFunc; i++){
-    //     int hashValue = (hashFunc[i] * hashCode) % prime; // % sz
-    //     // System.out.println(hashValue);
-    //     if(hashValue < signatures[i][0]){
-    //       signatures[i][0] = hashValue;
-    //     }
-    //     if(hashValue < signatures[i][1]){
-    //       signatures[i][1] = hashValue;
-    //     }
-    //   }
-    // }
-    // int minHashCode = prime + 1;
+    int prime = 37021;
     for(int j = 0; j < numHashFunc; j++){
       int minHashCode = prime + 1;
       for(Integer shingle: set1){
@@ -109,6 +79,7 @@ public class Minhash {
       }
     }
     // System.out.println(matches);
+    // double ans = (double)matches / (double)numHashFunc;
     return (double)matches / (double)numHashFunc;
   }
 
@@ -133,15 +104,15 @@ public class Minhash {
      * fB: Name of second file
      */  
     // Your code goes here 
-    int numHashFunc = 100, nGram = 5, numFiles = 2; 
+    int numHashFunc = 10, numFiles = 2; 
     //read files
     String content1 = readFile(fA);
-    System.out.println(content1);
+    // System.out.println(content1);
     
     String content2 = readFile(fB);
-    System.out.println(content2);
+    // System.out.println(content2);
 
-    return calcJSim(content1, content2, numHashFunc, nGram, numFiles);
+    return calcJSim(content1, content2, numHashFunc, numFiles);
   }
 
 }
