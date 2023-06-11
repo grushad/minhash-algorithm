@@ -102,7 +102,7 @@ public class Minhash {
      * fB: Name of second file
      */  
     // Your code goes here 
-    int numHashFunc = 69, numFiles = 2;     
+    int numHashFunc = 53, numFiles = 2;     
     String content1 = readFile(fA);    
     String content2 = readFile(fB);
 
