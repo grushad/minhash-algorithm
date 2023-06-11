@@ -70,15 +70,15 @@ public class Minhash {
       signatures[j][1] = minHashCode;
     }
 
-    int matches = 0;
+    double matches = 0.0;
     for(int i = 0; i < numHashFunc; i++){
       if(signatures[i][0] == signatures[i][1]){
-        matches++;
+        matches += 1.0;
       }
     }
     // System.out.println(matchxes);
     // double ans = (double)matches / (double)numHashFunc;
-    return (double)matches / (double)numHashFunc;
+    return matches / (double)numHashFunc;
   }
 
   String readFile(String fileName){
