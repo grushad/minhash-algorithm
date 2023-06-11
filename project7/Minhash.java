@@ -47,7 +47,7 @@ public class Minhash {
 
     int[][] signatures = new int[numHashFunc][numFiles];
 
-    int prime = 67957;
+    int prime = 109199;
     for(int j = 0; j < numHashFunc; j++){
       int minHashCode = prime + 1;
       for(Integer shingle: set1){
@@ -102,7 +102,7 @@ public class Minhash {
      * fB: Name of second file
      */  
     // Your code goes here 
-    int numHashFunc = 1000, numFiles = 2;     
+    int numHashFunc = 77, numFiles = 2;     
     String content1 = readFile(fA);    
     String content2 = readFile(fB);
 
