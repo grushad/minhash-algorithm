@@ -10,7 +10,7 @@ import java.io.*;
 public class Minhash {
 
   public void generateShingles(String content, Set<Integer> shingles){
-    int nGram = 3;  
+    int nGram = 2;  
     String[] arr = content.split(" ");
     for(int i = 0; i < arr.length - nGram; i++){
       String shingle = arr[i] +  " " + arr[i + 1] + " " + arr[i + 2];
@@ -76,7 +76,7 @@ public class Minhash {
         matches++;
       }
     }
-    System.out.println(matches);
+    // System.out.println(matchxes);
     // double ans = (double)matches / (double)numHashFunc;
     return (double)matches / (double)numHashFunc;
   }
@@ -102,7 +102,7 @@ public class Minhash {
      * fB: Name of second file
      */  
     // Your code goes here 
-    int numHashFunc = 77, numFiles = 2;     
+    int numHashFunc = 73, numFiles = 2;     
     String content1 = readFile(fA);    
     String content2 = readFile(fB);
 
