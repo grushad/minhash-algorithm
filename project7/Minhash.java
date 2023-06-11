@@ -9,12 +9,9 @@ import java.io.*;
 
 public class Minhash {
 
-  public void generateShingles(String content, Set<Integer> shingles){
-    //int nGram = 2;  
-    String[] arr = content.split(" ");
-    for(int i = 0; i < arr.length - 2; i++){
-      String shingle = arr[i] +  " " + arr[i + 1] + " " + arr[i + 2];
-      shingles.add(shingle.hashCode());
+  public void generateShingles(List<String> content, Set<Integer> shingles){    
+    for(int i = 0; i < content.size(); i++){      
+      shingles.add(content.get(i).hashCode());
     }    
   }
 
@@ -34,7 +31,7 @@ public class Minhash {
     return hashFunc;
   }
 
-  public double calcJSim(String content1, String content2, int numHashFunc, int numFiles){
+  public double calcJSim(List<String> content1, List<String> content2, int numHashFunc, int numFiles){
     
     Set<Integer> set1 = new HashSet<>();
     generateShingles(content1, set1);
@@ -52,9 +49,7 @@ public class Minhash {
       int minHashCode = prime + 1;
       for(Integer shingle: set1){
         int hashCode = (aCoeff[j] * shingle + bCoeff[j]) % prime;
-        if(hashCode < minHashCode){
-          minHashCode = hashCode;
-        }
+        minHashCode = Math.min(hashCode, minHashCode);        
       }
       signatures[j][0] = minHashCode;
     }
@@ -63,9 +58,7 @@ public class Minhash {
       int minHashCode = prime + 1;
       for(Integer shingle: set2){
         int hashCode = (aCoeff[j] * shingle + bCoeff[j]) % prime;
-        if(hashCode < minHashCode){
-          minHashCode = hashCode;
-        }
+        minHashCode = Math.min(hashCode, minHashCode);
       }
       signatures[j][1] = minHashCode;
     }
@@ -81,20 +74,21 @@ public class Minhash {
     return matches / (double)numHashFunc;
   }
 
-  String readFile(String fileName){
-    StringBuilder sb = new StringBuilder();
+  List<String> readFile(String fileName){
+    //StringBuilder sb = new StringBuilder();
+    List<String> list = new ArrayList<>();
     try {
       File myObj = new File(fileName);
       Scanner myReader = new Scanner(myObj);
       while (myReader.hasNextLine()) {
-        sb.append(myReader.nextLine() + " ");        
+        list.add(myReader.nextLine());        
       }
       myReader.close();
     } catch (FileNotFoundException e) {
       System.out.println("An error occurred.");
       e.printStackTrace();
     }
-    return sb.toString();
+    return list;
   }
   public double jaccard(String fA, String fB) {
     /**
@@ -102,9 +96,9 @@ public class Minhash {
      * fB: Name of second file
      */  
     // Your code goes here 
-    int numHashFunc = 53, numFiles = 2;     
-    String content1 = readFile(fA);    
-    String content2 = readFile(fB);
+    int numHashFunc = 97, numFiles = 2;     
+    List<String> content1 = readFile(fA);    
+    List<String> content2 = readFile(fB);
 
     return calcJSim(content1, content2, numHashFunc, numFiles);
   }
